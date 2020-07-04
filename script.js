@@ -24,6 +24,8 @@ function drawImage(){
     ctx.clearRect(0,0,canvas.width, canvas.height);
     class Particle {
         constructor(x, y, color, size){
+            console.log("yopp", x, this.x);
+            
             this.x = x + canvas.width/2-png.width*2,
             this.y = y + canvas.height/2-png.width*2,
             this.color = color,
@@ -62,10 +64,10 @@ function drawImage(){
             } else {
                 if (this.x !== this.baseX ) {
                     let dx = this.x - this.baseX;
-                    let dy = this.y - this.baseY;
+                    // let dy = this.y - this.baseY;
                     this.x -= dx/5;
                 } if (this.y !== this.baseY) {
-                    let dx = this.x - this.baseX;
+                    // let dx = this.x - this.baseX;
                     let dy = this.y - this.baseY;
                     this.y -= dy/5;
                 }
@@ -84,7 +86,8 @@ function drawImage(){
                     let color = "rgb("+data.data[(y * 4 * data.width)+ (x * 4)]+","+data.data[(y * 4 * data.width)+ (x * 4) +1]+","+data.data[(y * 4 * data.width)+ (x * 4) +2]+")";
 
                     particleArray.push(new Particle(positionX*4, positionY*4, color));
-
+                    console.log(particleArray);
+                    
                 }
             }
         }
