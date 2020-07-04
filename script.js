@@ -1,3 +1,4 @@
+debugger;
 const canvas = document.getElementById("canvasId");
 const ctx = canvas.getContext("2d");
 canvas.width  = window.innerWidth;
@@ -22,9 +23,10 @@ function drawImage(){
     let imageHeight = png.height || png.naturalHeight;
     const data = ctx.getImageData(0, 0, imageWidth, imageHeight);
     ctx.clearRect(0,0,canvas.width, canvas.height);
+    debugger;
     class Particle {
         constructor(x, y, color, size){
-            console.log("yopp", x, this.x);
+            // console.log("yopp", x, this.x);
             
             this.x = x + canvas.width/2-png.width*2,
             this.y = y + canvas.height/2-png.width*2,
@@ -41,6 +43,9 @@ function drawImage(){
             ctx.fill();
         }
         update() {
+            // console.log("ooof");
+            // console.log(this.color);
+            
             ctx.fillStyle = this.color;
             // check mouse position/particle position - collision detection
             let dx = mouse.x - this.x;
@@ -86,12 +91,12 @@ function drawImage(){
                     let color = "rgb("+data.data[(y * 4 * data.width)+ (x * 4)]+","+data.data[(y * 4 * data.width)+ (x * 4) +1]+","+data.data[(y * 4 * data.width)+ (x * 4) +2]+")";
 
                     particleArray.push(new Particle(positionX*4, positionY*4, color));
-                    console.log(particleArray);
+                    // console.log(particleArray);
                     
                 }
             }
         }
-        
+        // debugger;
     }
     function animate(){
         requestAnimationFrame(animate);
@@ -103,7 +108,13 @@ function drawImage(){
 	    
 	
 	    for (let i = 0; i < particleArray.length; i++){
+            // debugger;
+
             particleArray[i].update();
+            // console.log(particleArray[i]);
+            
+            // console.log(particleArray[i].update());
+            
 	    }
     }
     init();
