@@ -4,7 +4,7 @@ const ctx = canvas.getContext("2d");
 canvas.width  = window.innerWidth;
 canvas.height = window.innerHeight;
 let particleArray = [];
-
+debugger;
 
 // get mouse mouse position ///////////////////////////////
 let mouse = {
@@ -23,7 +23,6 @@ function drawImage(){
     let imageHeight = png.height || png.naturalHeight;
     const data = ctx.getImageData(0, 0, imageWidth, imageHeight);
     ctx.clearRect(0,0,canvas.width, canvas.height);
-    debugger;
     class Particle {
         constructor(x, y, color, size){
             // console.log("yopp", x, this.x);
@@ -47,6 +46,8 @@ function drawImage(){
             // console.log(this.color);
             
             ctx.fillStyle = this.color;
+            console.log("scheeeko: ", mouse);
+
             // check mouse position/particle position - collision detection
             let dx = mouse.x - this.x;
             let dy = mouse.y - this.y;

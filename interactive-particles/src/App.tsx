@@ -74,7 +74,7 @@ function App() {
   const mouse = {
     x: null,
     y: null,
-    radius: 80
+    radius:80
   };
   const png = new Image();
   const canvas: any = useRef<any>();
@@ -89,9 +89,9 @@ function App() {
   // const context = canvas.getContext('2d');
 
   const resizeCanvas = () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    // init(data);
+    canvas.current.width = window.innerWidth;
+    canvas.current.height = window.innerHeight;
+    init();
   }
   const drawCanvasImage = () => {
     let imageWidth = png.width || png.naturalWidth;
@@ -99,7 +99,7 @@ function App() {
     console.log(imageWidth, imageHeight);
 
     data = context.getImageData(0, 0, imageWidth, imageHeight);
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.clearRect(0, 0, canvas.current.width, canvas.current.height);
     // debugger;
     init();
     // animate();
@@ -113,6 +113,8 @@ function App() {
   }
   const update = (particle: IParticle) => {
     context.fillStyle = particle.color;
+    // console.log("scheeeko: ", mouse);
+    
     // check mouse position/particle position - collision detection
     let dx = mouse.x! - particle.x;
     let dy = mouse.y! - particle.y;
@@ -142,14 +144,14 @@ function App() {
           let dy = particle.y - particle.baseY;
           particle.y -= dy/5;
       }
-      draw(particle);
-  }
+    }
+    draw(particle);
   }
   const animate = () => {
     // console.log("particles: ", particleArray);
 
     // debugger;
-    requestAnimationFrame(animate);
+    window.requestAnimationFrame(animate);
     context.fillStyle = 'rgba(255,255,255,.2)';
     // console.log(canvas.width, window.innerWidth,innerHeight);
 
@@ -214,16 +216,17 @@ function App() {
     //   const canvas = document.getElementById("canvasId") as HTMLCanvasElement;
     // const context = canvas.getContext('2d');
     context.drawImage(png, 0, 0);
+    // debugger;
     drawCanvasImage();
   }
   const mouseMove = (event: any) => {
     mouse.x = event.x + canvas.current.clientLeft / 2;
     mouse.y = event.y + canvas.current.clientTop / 2;
-    console.log("mouse movement: ", mouse);
+    // console.log("mouse movement: ", mouse);
     
   }
   const init = () => {
-    particleArray = [];
+    // particleArray = [];
     // let imageWidth = png.width;
     // let imageHeight = png.height;
     // const data = context.getImageData(0, 0, png.width, png.height);
@@ -240,8 +243,8 @@ function App() {
             y: positionY + canvas.current.height / 2 - png.width * 2,
             color: color,
             size: 2,
-            baseX: x + canvas.current.width / 2 - png.width * 2,
-            baseY: y + canvas.current.height / 2 - png.width * 2,
+            baseX: positionX  + canvas.current.width / 2 - png.width * 2,
+            baseY: positionY + canvas.current.height / 2 - png.width * 2,
             density: (Math.random() * 10) + 2
           }
           particleArray.push(particle);
@@ -272,7 +275,7 @@ function App() {
     return () => {
       window.removeEventListener('load', pageLoad);
       window.removeEventListener('resize', resizeCanvas);
-      window.addEventListener('mousemove', mouseMove);
+      window.removeEventListener('mousemove', mouseMove);
     }
   }, []);
   return (
