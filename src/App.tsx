@@ -122,6 +122,7 @@ function App() {
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', mouseMove);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="App">
