@@ -19,7 +19,7 @@ function App() {
   };
   const png = new Image();
   const canvasRef: any = useRef<any>();
-  let context: any;
+  let context: any = useRef<any>();
   let particles: IParticle[] = [];
   let imageData: any;
   const resizeCanvas = () => {
@@ -30,18 +30,18 @@ function App() {
   const drawCanvasImage = () => {
     let imageWidth = png.width || png.naturalWidth;
     let imageHeight = png.height || png.naturalHeight;
-    imageData = context.getImageData(0, 0, imageWidth, imageHeight);
-    context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    imageData = context.current.getImageData(0, 0, imageWidth, imageHeight);
+    context.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
     init();
   }
   const draw = (particle: IParticle) => {
-    context.beginPath();
-    context.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-    context.closePath();
-    context.fill();
+    context.current.beginPath();
+    context.current.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+    context.current.closePath();
+    context.current.fill();
   }
   const update = (particle: IParticle) => {
-    context.fillStyle = particle.color;
+    context.current.fillStyle = particle.color;
     let dx = mouse.x! - particle.x;
     let dy = mouse.y! - particle.y;
     let distance = Math.sqrt(dx * dx + dy * dy);
@@ -72,15 +72,15 @@ function App() {
   }
   const animate = () => {
     window.requestAnimationFrame(animate);
-    context.fillStyle = 'rgba(255,255,255,.2)';
-    context.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    context.current.fillStyle = 'rgba(255,255,255,.2)';
+    context.current.fillRect(0, 0, window.innerWidth, window.innerHeight);
     particles.forEach(particle => {
       update(particle);
     });
   }
   const pageLoad = () => {
     console.log('page has loaded');
-    context.drawImage(png, 0, 0);
+    context.current.drawImage(png, 0, 0);
     drawCanvasImage();
   }
   const mouseMove = (event: any) => {
