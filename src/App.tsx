@@ -113,7 +113,7 @@ function App() {
   }
   useLayoutEffect(() => {
     png.src = BatmanBase64;
-    context = canvasRef.current.getContext("2d");
+    context.current = canvasRef.current.getContext("2d");
     window.addEventListener('load', pageLoad);
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('mousemove', mouseMove);
